@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "469804570058",
+    "project_id": "pantryinventory-dbebb",
+    "storage_bucket": "pantryinventory-dbebb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469804570058:android:dd078e9d5b9f04f0a0ab33",
+        "android_client_info": {
+          "package_name": "com.example.pantryinventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469804570058-km4f64aojrd6k0v0epnq9548lqradh0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuerriSCEFDzgM6TkZeVOJux6oxqn9EYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469804570058-km4f64aojrd6k0v0epnq9548lqradh0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

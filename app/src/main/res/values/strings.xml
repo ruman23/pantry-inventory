@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">pantryinventory</string>
+    <string name="login">LogIn</string>
+    <string name="email">Email</string>
+</resources>
