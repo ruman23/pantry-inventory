@@ -2,24 +2,24 @@ package com.example.pantryinventory;
 
 public class ItemData {
     private int imageResourceId;
-    private String title;
-    private String subtitle;
+    private String foodName;
+    private String expDate;
 
-    public ItemData(int imageResourceId, String title, String subtitle) {
+    public ItemData(int imageResourceId, String foodName, String subtitle) {
         this.imageResourceId = imageResourceId;
-        this.title = title;
-        this.subtitle = subtitle;
+        this.foodName = foodName;
+        this.expDate = subtitle;
     }
 
     public int getImageResourceId() {
         return imageResourceId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getExpDate() {
+        return expDate;
     }
 }

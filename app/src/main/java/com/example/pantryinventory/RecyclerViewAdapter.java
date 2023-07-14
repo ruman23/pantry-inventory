@@ -9,9 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pantryinventory.ItemData;
-import com.example.pantryinventory.R;
-
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -33,8 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ItemData itemData = itemDataList.get(position);
         holder.imageView.setImageResource(itemData.getImageResourceId());
-        holder.title.setText(itemData.getTitle());
-        holder.subtitle.setText(itemData.getSubtitle());
+        holder.title.setText(itemData.getFoodName());
+        holder.subtitle.setText(itemData.getExpDate());
     }
 
     @Override
