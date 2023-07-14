@@ -17,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/login" />
+        android:text="Create Account" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,7 +29,7 @@
         android:minHeight="48dp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,14 +44,14 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/create_account__button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create" />
+
+    <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login" />
-
-    <Button
-        android:id="@+id/create_account_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create New Account" />
 </LinearLayout>

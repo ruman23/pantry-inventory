@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">pantry inventory</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name">pantry-inventory</string>
+    <string name="login">LogIn</string>
+    <string name="email">Email</string>
+<!--    <string name="logout">Logout</string>-->
+    <string name="password">Password</string>
+    <string name="content_description">content_description</string>
+    <string name="user_details">user_details</string>
+    <string name="logout">Logout</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
