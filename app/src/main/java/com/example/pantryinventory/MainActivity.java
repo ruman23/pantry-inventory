@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     RecyclerView recyclerView;
+    Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         recyclerView = findViewById(R.id.recycler_view);
+        addButton = findViewById(R.id.add_button);
 
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -73,13 +75,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         List<ItemData> itemDataList = new ArrayList<>();
-//        itemDataList.add(new ItemData(R.drawable.your_image, "Title 1", "Subtitle 1"));
+        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 1", "July 29, 2023"));
+        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 2", "Aug 29, 2023"));
+        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 3", "Dec 29, 2023"));
+
 //        itemDataList.add(new ItemData(R.drawable.your_image, "Title 2", "Subtitle 2"));
         // Add more data as required
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddFoods.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
