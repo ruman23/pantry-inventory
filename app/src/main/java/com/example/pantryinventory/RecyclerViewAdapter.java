@@ -16,16 +16,18 @@ import com.squareup.picasso.Picasso;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<ItemData> itemDataList;
+    private OnItemListener onItemListener;
 
-    public RecyclerViewAdapter(List<ItemData> itemDataList) {
+    public RecyclerViewAdapter(List<ItemData> itemDataList, OnItemListener onItemListener) {
         this.itemDataList = itemDataList;
+        this.onItemListener = onItemListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onItemListener);
     }
 
     @Override
@@ -41,16 +43,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return itemDataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView title;
         TextView subtitle;
+        OnItemListener onItemListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             title = itemView.findViewById(R.id.title);
             subtitle = itemView.findViewById(R.id.subtitle);
+            this.onItemListener = onItemListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onItemListener.onItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnItemListener {
+        void onItemClick(int position);
     }
 }

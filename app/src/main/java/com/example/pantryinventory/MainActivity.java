@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemListener {
     FirebaseAuth auth;
     FirebaseUser user;
 
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     Button addButton;
 
     AtomicBoolean dataLoaded = new AtomicBoolean(false);
+    List<ItemData> itemDataList;
+    List<String> keys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
         new FirebaseDBHelper().readItems(new FirebaseDBHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList);
+                MainActivity.this.itemDataList = itemDataList;
+                MainActivity.this.keys = keys;
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, MainActivity.this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 dataLoaded.set(true);
@@ -113,6 +117,17 @@ public class MainActivity extends AppCompatActivity {
             public void DataIsDeleted() { }
         });
     }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(MainActivity.this, AddFoods.class);
+        intent.putExtra("itemData", itemDataList.get(position));
+        intent.putExtra("key", keys.get(position));  // You need the key to update the item in Firebase
+        startActivity(intent);
+    }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

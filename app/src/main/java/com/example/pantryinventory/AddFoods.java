@@ -42,6 +42,8 @@ public class AddFoods extends AppCompatActivity {
     private DatePicker datePicker;
     private Uri imageUri;
     private ProgressBar progressBar;
+    private ItemData itemData;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,20 @@ public class AddFoods extends AppCompatActivity {
         editText = findViewById(R.id.edit_text);
         datePicker = findViewById(R.id.date_picker);
         progressBar = findViewById(R.id.progressBar);
+
+        itemData = (ItemData) getIntent().getSerializableExtra("itemData");
+        key = getIntent().getStringExtra("key");
+
+        if (itemData != null) {
+            // This is an existing item. Display its data.
+            editText.setText(itemData.getFoodName());
+            Picasso.get().load(itemData.getImageUrl()).into(imageView);
+            // You need to convert itemData's expiration date to Calendar and set it to the datePicker
+        } else {
+            // This is a new item. Initialize itemData and key.
+            itemData = new ItemData();
+            key = FirebaseDatabase.getInstance().getReference().child("items").push().getKey();
+        }
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +83,7 @@ public class AddFoods extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the food name
                 String foodName = editText.getText().toString();
+                itemData.setFoodName(foodName);
 
                 // Get the expiration date
                 int day = datePicker.getDayOfMonth();
@@ -76,7 +93,7 @@ public class AddFoods extends AppCompatActivity {
                 calendar.set(year, month, day);
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 String expDate = format.format(calendar.getTime());
-
+                itemData.setExpDate(expDate);
 
                 progressBar.setVisibility(View.VISIBLE);
                 // Upload the selected image to Firebase Storage
@@ -89,20 +106,21 @@ public class AddFoods extends AppCompatActivity {
                         Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                         while (!urlTask.isSuccessful()) ;
                         Uri downloadUrl = urlTask.getResult();
-
-                        // Create an ItemData object with the download URL
-                        ItemData itemData = new ItemData(downloadUrl.toString(), foodName, expDate);
+                        itemData.setImageUrl(downloadUrl.toString());
 
                         // Get a reference to the Realtime Database
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                        // Push a new item to the "items" child node
-                        databaseReference.child("items").push().setValue(itemData);
-
-                        // Return to the previous screen
-                        progressBar.setVisibility(View.GONE);
-                        onBackPressed();
-
+                        // Update the item in Firebase
+                        databaseReference.child("items").child(key).setValue(itemData)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        progressBar.setVisibility(View.GONE);
+                                        // Return to the previous screen
+                                        onBackPressed();
+                                    }
+                                });
                     }
                 });
             }

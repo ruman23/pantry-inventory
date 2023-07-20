@@ -1,12 +1,15 @@
 package com.example.pantryinventory;
 
-public class ItemData {
+import java.io.Serializable;
+
+public class ItemData implements Serializable {
     private String imageUrl;
     private String foodName;
     private String expDate;
 
+    // Assume there is no argument constructor and getter setter here
+
     public ItemData() {
-        // no-argument constructor
     }
 
     public ItemData(String imageUrl, String foodName, String expDate) {
