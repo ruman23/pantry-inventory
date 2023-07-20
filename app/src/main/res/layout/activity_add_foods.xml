@@ -17,23 +17,41 @@
         android:textSize="30sp"
         android:layout_marginBottom="16dp" />
 
-    <!-- ImageView to select an image -->
-    <ImageView
-        android:id="@+id/image_view"
+    <!-- RelativeLayout containing ImageView to select an image and an ImageButton to start the selection -->
+    <RelativeLayout
+        android:id="@+id/image_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/burger"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/burger"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+
+        <ImageButton
+            android:id="@+id/add_image_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_input_add"
+            android:scaleType="fitXY"
+            app:tint="#FFFFFF" />
+
+
+    </RelativeLayout>
 
     <!-- DatePicker to select a date -->
     <DatePicker
         android:id="@+id/date_picker"
         android:layout_width="wrap_content"
-    android:layout_height="120pt"
-    android:calendarViewShown="false"
-    android:layout_marginBottom="8dp" />
+        android:layout_height="120pt"
+        android:calendarViewShown="false"
+        android:layout_marginBottom="8dp" />
 
     <!-- Add a Space view to push the button to the bottom -->
     <Space
@@ -48,6 +66,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Save" />
-
-
 </LinearLayout>

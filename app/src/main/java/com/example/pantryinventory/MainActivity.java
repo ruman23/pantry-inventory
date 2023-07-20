@@ -23,6 +23,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     RecyclerView recyclerView;
     Button addButton;
+
+    AtomicBoolean dataLoaded = new AtomicBoolean(false);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +77,46 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        List<ItemData> itemDataList = new ArrayList<>();
-        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 1", "July 29, 2023"));
-        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 2", "Aug 29, 2023"));
-        itemDataList.add(new ItemData(R.drawable.burger, "Food Name 3", "Dec 29, 2023"));
-
-//        itemDataList.add(new ItemData(R.drawable.your_image, "Title 2", "Subtitle 2"));
-        // Add more data as required
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        addButton.setOnClickListener(new View.OnClickListener() {
+        new FirebaseDBHelper().readItems(new FirebaseDBHelper.DataStatus() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddFoods.class);
-                startActivity(intent);
+            public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                dataLoaded.set(true);
             }
+
+            @Override
+            public void DataIsInserted() { }
+
+            @Override
+            public void DataIsUpdated() { }
+
+            @Override
+            public void DataIsDeleted() { }
         });
+
+        Thread thread = new Thread(() -> {
+            while (!dataLoaded.get()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            runOnUiThread(() -> {
+                addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, AddFoods.class);
+                        startActivity(intent);
+                    }
+                });
+            });
+        });
+
+        thread.start();
     }
 
     @Override
