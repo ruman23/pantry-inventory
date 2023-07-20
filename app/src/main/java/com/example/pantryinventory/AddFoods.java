@@ -45,6 +45,10 @@ public class AddFoods extends AppCompatActivity {
     private ItemData itemData;
     private String key;
 
+    private String originalFoodName;
+    private String originalExpDate;
+    private String originalImageUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,11 @@ public class AddFoods extends AppCompatActivity {
             editText.setText(itemData.getFoodName());
             Picasso.get().load(itemData.getImageUrl()).into(imageView);
             // You need to convert itemData's expiration date to Calendar and set it to the datePicker
+
+            // Save the original values
+            originalFoodName = itemData.getFoodName();
+            originalExpDate = itemData.getExpDate();
+            originalImageUrl = itemData.getImageUrl();
         } else {
             // This is a new item. Initialize itemData and key.
             itemData = new ItemData();
@@ -83,7 +92,6 @@ public class AddFoods extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the food name
                 String foodName = editText.getText().toString();
-                itemData.setFoodName(foodName);
 
                 // Get the expiration date
                 int day = datePicker.getDayOfMonth();
@@ -93,38 +101,54 @@ public class AddFoods extends AppCompatActivity {
                 calendar.set(year, month, day);
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 String expDate = format.format(calendar.getTime());
-                itemData.setExpDate(expDate);
 
-                progressBar.setVisibility(View.VISIBLE);
-                // Upload the selected image to Firebase Storage
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("uploads").child(imageUri.getLastPathSegment());
-                UploadTask uploadTask = storageReference.putFile(imageUri);
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get the download URL of the uploaded image
-                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!urlTask.isSuccessful()) ;
-                        Uri downloadUrl = urlTask.getResult();
-                        itemData.setImageUrl(downloadUrl.toString());
+                // Check if any data has been changed
+                if (!foodName.equals(originalFoodName) || !expDate.equals(originalExpDate) || (imageUri != null && !imageUri.toString().equals(originalImageUrl))) {
+                    // If so, update the item data and save it to Firebase
+                    itemData.setFoodName(foodName);
+                    itemData.setExpDate(expDate);
 
-                        // Get a reference to the Realtime Database
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    progressBar.setVisibility(View.VISIBLE);
+                    // Upload the selected image to Firebase Storage
+                    if (imageUri != null) {
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("uploads").child(imageUri.getLastPathSegment());
+                        UploadTask uploadTask = storageReference.putFile(imageUri);
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Get the download URL of the uploaded image
+                                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!urlTask.isSuccessful()) ;
+                                Uri downloadUrl = urlTask.getResult();
+                                itemData.setImageUrl(downloadUrl.toString());
 
-                        // Update the item in Firebase
-                        databaseReference.child("items").child(key).setValue(itemData)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        progressBar.setVisibility(View.GONE);
-                                        // Return to the previous screen
-                                        onBackPressed();
-                                    }
-                                });
+                                // Update the item in Firebase
+                                updateItemInFirebase();
+                            }
+                        });
+                    } else {
+                        // No new image, just update the item in Firebase
+                        updateItemInFirebase();
                     }
-                });
+                }
             }
         });
+    }
+
+    private void updateItemInFirebase() {
+        // Get a reference to the Realtime Database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Update the item in Firebase
+        databaseReference.child("items").child(key).setValue(itemData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progressBar.setVisibility(View.GONE);
+                        // Return to the previous screen
+                        onBackPressed();
+                    }
+                });
     }
 
     private void openFileChooser() {
