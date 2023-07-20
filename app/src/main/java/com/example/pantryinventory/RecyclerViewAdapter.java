@@ -3,6 +3,7 @@ package com.example.pantryinventory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView imageView;
         TextView title;
         TextView subtitle;
+        Button deleteButton;
         OnItemListener onItemListener;
 
         public ViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
@@ -54,9 +56,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imageView = itemView.findViewById(R.id.imageView);
             title = itemView.findViewById(R.id.title);
             subtitle = itemView.findViewById(R.id.subtitle);
+            deleteButton = itemView.findViewById(R.id.delete_button);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // delete item
+                    onItemListener.onDeleteClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override
@@ -67,5 +78,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemListener {
         void onItemClick(int position);
+        void onDeleteClick(int position);
     }
 }

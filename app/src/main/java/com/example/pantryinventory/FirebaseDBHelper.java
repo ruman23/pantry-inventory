@@ -2,6 +2,7 @@ package com.example.pantryinventory;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,5 +54,15 @@ public class FirebaseDBHelper {
                 // handle error here
             }
         });
+    }
+
+    public void deleteItem(String key, final DataStatus dataStatus) {
+        ref.child(key).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        dataStatus.DataIsDeleted();
+                    }
+                });
     }
 }

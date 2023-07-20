@@ -136,4 +136,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDeleteClick(int position) {
+        new FirebaseDBHelper().deleteItem(keys.get(position), new FirebaseDBHelper.DataStatus() {
+            @Override
+            public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) { }
+
+            @Override
+            public void DataIsInserted() { }
+
+            @Override
+            public void DataIsUpdated() { }
+
+            @Override
+            public void DataIsDeleted() {
+                // re-load the data
+                loadData();
+            }
+        });
+    }
+
 }
