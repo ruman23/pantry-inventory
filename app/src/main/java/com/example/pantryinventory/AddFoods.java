@@ -19,9 +19,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +41,7 @@ public class AddFoods extends AppCompatActivity {
     private EditText editText;
     private DatePicker datePicker;
     private Uri imageUri;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,7 @@ public class AddFoods extends AppCompatActivity {
         ImageButton addImageButton = findViewById(R.id.add_image_button);
         editText = findViewById(R.id.edit_text);
         datePicker = findViewById(R.id.date_picker);
-
-        applyBlur(this, imageView, 5f);
+        progressBar = findViewById(R.id.progressBar);
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +65,6 @@ public class AddFoods extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform save action here
-
-                // Get the Drawable's ID
-                Drawable drawable = imageView.getDrawable();
-                String drawableString = drawable.toString();
-                int imageResourceId = getResources().getIdentifier(drawableString.substring(drawableString.lastIndexOf('/') + 1, drawableString.lastIndexOf('.')), "drawable", getPackageName());
-
                 // Get the food name
                 String foodName = editText.getText().toString();
 
@@ -78,43 +77,36 @@ public class AddFoods extends AppCompatActivity {
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 String expDate = format.format(calendar.getTime());
 
-                // Create an ItemData object
-                ItemData itemData = new ItemData(imageResourceId, foodName, expDate);
 
-                // Get a reference to the Realtime Database
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                progressBar.setVisibility(View.VISIBLE);
+                // Upload the selected image to Firebase Storage
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("uploads").child(imageUri.getLastPathSegment());
+                UploadTask uploadTask = storageReference.putFile(imageUri);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image
+                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!urlTask.isSuccessful()) ;
+                        Uri downloadUrl = urlTask.getResult();
 
-                // Push a new item to the "items" child node
-                databaseReference.child("items").push().setValue(itemData);
+                        // Create an ItemData object with the download URL
+                        ItemData itemData = new ItemData(downloadUrl.toString(), foodName, expDate);
 
-                // Return to the previous screen
-                onBackPressed();
+                        // Get a reference to the Realtime Database
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+                        // Push a new item to the "items" child node
+                        databaseReference.child("items").push().setValue(itemData);
+
+                        // Return to the previous screen
+                        progressBar.setVisibility(View.GONE);
+                        onBackPressed();
+
+                    }
+                });
             }
         });
-    }
-
-    public void applyBlur(Context context, ImageView imageView, float blurRadius) {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-
-        RenderScript rs = RenderScript.create(context);
-
-        Allocation input = Allocation.createFromBitmap(rs, bitmap);
-        Allocation output = Allocation.createTyped(rs, input.getType());
-
-        ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        script.setRadius(blurRadius); // Set the blur radius
-        script.setInput(input);
-        script.forEach(output);
-
-        output.copyTo(bitmap);
-
-        input.destroy();
-        output.destroy();
-        script.destroy();
-        rs.destroy();
-
-        imageView.setImageBitmap(bitmap);
     }
 
     private void openFileChooser() {

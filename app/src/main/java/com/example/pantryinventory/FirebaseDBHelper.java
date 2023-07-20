@@ -48,7 +48,6 @@ public class FirebaseDBHelper {
                 dataStatus.DataIsLoaded(itemDataList, keys);
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // handle error here

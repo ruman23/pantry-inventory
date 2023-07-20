@@ -24,7 +24,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
@@ -77,6 +76,24 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        loadData();
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddFoods.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData(); // Reload the data whenever MainActivity is resumed
+    }
+
+    private void loadData() {
         new FirebaseDBHelper().readItems(new FirebaseDBHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
@@ -95,28 +112,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void DataIsDeleted() { }
         });
-
-        Thread thread = new Thread(() -> {
-            while (!dataLoaded.get()) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            runOnUiThread(() -> {
-                addButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, AddFoods.class);
-                        startActivity(intent);
-                    }
-                });
-            });
-        });
-
-        thread.start();
     }
 
     @Override

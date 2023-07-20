@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import com.squareup.picasso.Picasso;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<ItemData> itemDataList;
@@ -29,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ItemData itemData = itemDataList.get(position);
-        holder.imageView.setImageResource(itemData.getImageResourceId());
+        Picasso.get().load(itemData.getImageUrl()).into(holder.imageView);
         holder.title.setText(itemData.getFoodName());
         holder.subtitle.setText(itemData.getExpDate());
     }

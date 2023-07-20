@@ -1,7 +1,7 @@
 package com.example.pantryinventory;
 
 public class ItemData {
-    private int imageResourceId;
+    private String imageUrl;
     private String foodName;
     private String expDate;
 
@@ -9,18 +9,18 @@ public class ItemData {
         // no-argument constructor
     }
 
-    public ItemData(int imageResourceId, String foodName, String expDate) {
-        this.imageResourceId = imageResourceId;
+    public ItemData(String imageUrl, String foodName, String expDate) {
+        this.imageUrl = imageUrl;
         this.foodName = foodName;
         this.expDate = expDate;
     }
 
-    public int getImageResourceId() {
-        return imageResourceId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFoodName() {
