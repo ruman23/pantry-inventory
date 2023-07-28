@@ -2,6 +2,10 @@
     <!-- Other menu items -->
 
     <item
+        android:id="@+id/nav_notification"
+        android:title="Notification"/>
+
+    <item
         android:id="@+id/nav_logout"
         android:title="@string/logout"/>
 

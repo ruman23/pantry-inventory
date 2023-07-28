@@ -2,7 +2,7 @@
     <string name="app_name">pantry-inventory</string>
     <string name="login">LogIn</string>
     <string name="email">Email</string>
-<!--    <string name="logout">Logout</string>-->
+    <!--    <string name="logout">Logout</string>-->
     <string name="password">Password</string>
     <string name="content_description">content_description</string>
     <string name="user_details">user_details</string>

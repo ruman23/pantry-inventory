@@ -15,7 +15,6 @@ import java.util.List;
 import com.squareup.picasso.Picasso;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
     private List<ItemData> itemDataList;
     private OnItemListener onItemListener;
 
@@ -36,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ItemData itemData = itemDataList.get(position);
         Picasso.get().load(itemData.getImageUrl()).into(holder.imageView);
         holder.title.setText(itemData.getFoodName());
-        holder.subtitle.setText(itemData.getExpDate());
+        holder.subtitle.setText( itemData.getExpDate());
     }
 
     @Override

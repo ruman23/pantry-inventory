@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     startActivity(intent);
                     finish();
                     break;
+                case R.id.nav_notification:
+                    Intent notification_intent = new Intent(getApplicationContext(), NotificationList.class);
+                    startActivity(notification_intent);
+                    finish();
+                    break;
             }
             drawerLayout.closeDrawers();
             return true;
@@ -125,9 +130,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent.putExtra("key", keys.get(position));  // You need the key to update the item in Firebase
         startActivity(intent);
     }
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
