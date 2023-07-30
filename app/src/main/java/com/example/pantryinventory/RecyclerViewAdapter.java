@@ -17,10 +17,12 @@ import com.squareup.picasso.Picasso;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<ItemData> itemDataList;
     private OnItemListener onItemListener;
+    private boolean isNotification;
 
-    public RecyclerViewAdapter(List<ItemData> itemDataList, OnItemListener onItemListener) {
+    public RecyclerViewAdapter(List<ItemData> itemDataList, boolean isNotification, OnItemListener onItemListener) {
         this.itemDataList = itemDataList;
         this.onItemListener = onItemListener;
+        this.isNotification = isNotification;
     }
 
     @NonNull
@@ -35,7 +37,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ItemData itemData = itemDataList.get(position);
         Picasso.get().load(itemData.getImageUrl()).into(holder.imageView);
         holder.title.setText(itemData.getFoodName());
-        holder.subtitle.setText( itemData.getExpDate());
+
+        if (isNotification) {
+            // Set a custom string for the subtitle if it's a notification
+            holder.subtitle.setText("Will expire on "+ itemData.getExpDate());
+        } else {
+            // Set the original value from the ItemData object for the subtitle
+            holder.subtitle.setText(itemData.getExpDate());
+        }
     }
 
     @Override

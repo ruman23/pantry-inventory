@@ -6,6 +6,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +28,7 @@ import com.google.firebase.ktx.Firebase;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemListener {
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         navigationView = findViewById(R.id.nav_view);
         recyclerView = findViewById(R.id.recycler_view);
         addButton = findViewById(R.id.add_button);
+
+        scheduleAlarm();
 
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -94,6 +103,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
     }
 
+    private void scheduleAlarm() {
+        ComponentName componentName = new ComponentName(this, DatabaseCheckJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("MainActivity", "Job scheduled");
+        } else {
+            Log.d("MainActivity", "Job scheduling failed");
+        }
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -106,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
                 MainActivity.this.itemDataList = itemDataList;
                 MainActivity.this.keys = keys;
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, MainActivity.this);
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, false,MainActivity.this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 dataLoaded.set(true);

@@ -55,7 +55,7 @@ public class NotificationList extends AppCompatActivity implements RecyclerViewA
             public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
                 NotificationList.this.itemDataList = itemDataList;
                 NotificationList.this.keys = keys;
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, NotificationList.this);
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, true, NotificationList.this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(NotificationList.this));
                 dataLoaded.set(true);
