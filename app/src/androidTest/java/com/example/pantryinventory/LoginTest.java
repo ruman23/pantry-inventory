@@ -96,5 +96,4 @@ public class LoginTest {
         // Release Espresso-Intents after test completes.
         Intents.release();
     }
-
 }
