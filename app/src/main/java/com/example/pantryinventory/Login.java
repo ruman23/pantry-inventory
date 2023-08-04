@@ -26,12 +26,12 @@ public class Login extends AppCompatActivity {
     private Button loginButton;
     private Button createAccountButton;
     private ProgressBar progressBar;
-    FirebaseAuth mAuth;
+    private LoginManager loginManager;
 
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = loginManager.getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -44,7 +44,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
+        loginManager = new LoginManager(FirebaseAuth.getInstance());
+
         loginTextView = findViewById(R.id.Login);
         emailEditText = findViewById(R.id.editTextTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextTextPassword);
@@ -80,23 +81,24 @@ public class Login extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(Login.this, "Login Successful.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(Login.this, "Login Errors.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                loginManager.signIn(email, password, new LoginManager.LoginCallback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(Login.this, "Login Successful.",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(Login.this, "Login Errors.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
