@@ -1,11 +1,20 @@
 package com.example.pantryinventory;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -53,24 +62,49 @@ public class NotificationList extends AppCompatActivity implements RecyclerViewA
         new FirebaseDBHelper().readItems(new FirebaseDBHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
-                NotificationList.this.itemDataList = itemDataList;
-                NotificationList.this.keys = keys;
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(itemDataList, true, NotificationList.this);
+                // Filtering items
+                List<ItemData> filteredList = new ArrayList<>();
+                List<String> filteredKeys = new ArrayList<>();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar sevenDaysLaterCal = Calendar.getInstance();
+                sevenDaysLaterCal.add(Calendar.DAY_OF_YEAR, 7);
+
+                for (int i = 0; i < itemDataList.size(); i++) {
+                    ItemData item = itemDataList.get(i);
+                    try {
+                        Date itemDate = sdf.parse(item.getExpDate());
+                        if (itemDate != null && !itemDate.after(sevenDaysLaterCal.getTime())) {
+                            filteredList.add(item);
+                            filteredKeys.add(keys.get(i));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                NotificationList.this.itemDataList = filteredList;
+                NotificationList.this.keys = filteredKeys;
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(filteredList, true, NotificationList.this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(NotificationList.this));
                 dataLoaded.set(true);
             }
 
             @Override
-            public void DataIsInserted() { }
+            public void DataIsInserted() {
+            }
 
             @Override
-            public void DataIsUpdated() { }
+            public void DataIsUpdated() {
+            }
 
             @Override
-            public void DataIsDeleted() { }
+            public void DataIsDeleted() {
+            }
         });
     }
+
 
     @Override
     public void onItemClick(int position) {
@@ -84,13 +118,16 @@ public class NotificationList extends AppCompatActivity implements RecyclerViewA
     public void onDeleteClick(int position) {
         new FirebaseDBHelper().deleteItem(keys.get(position), new FirebaseDBHelper.DataStatus() {
             @Override
-            public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) { }
+            public void DataIsLoaded(List<ItemData> itemDataList, List<String> keys) {
+            }
 
             @Override
-            public void DataIsInserted() { }
+            public void DataIsInserted() {
+            }
 
             @Override
-            public void DataIsUpdated() { }
+            public void DataIsUpdated() {
+            }
 
             @Override
             public void DataIsDeleted() {
