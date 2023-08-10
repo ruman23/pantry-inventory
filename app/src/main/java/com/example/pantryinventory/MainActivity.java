@@ -6,29 +6,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.ktx.Firebase;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemListener {
@@ -57,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         recyclerView = findViewById(R.id.recycler_view);
         addButton = findViewById(R.id.add_button);
 
-        scheduleAlarm();
+        scheduleToNotify();
 
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -103,10 +94,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
     }
 
-    private void scheduleAlarm() {
-        ComponentName componentName = new ComponentName(this, DatabaseCheckJobService.class);
+    private void scheduleToNotify() {
+        ComponentName componentName = new ComponentName(this, NotifyUser.class);
         JobInfo info = new JobInfo.Builder(123, componentName)
-                .setRequiresCharging(true)
+                .setRequiresCharging(false)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true)
                 .setPeriodic(15 * 60 * 1000)

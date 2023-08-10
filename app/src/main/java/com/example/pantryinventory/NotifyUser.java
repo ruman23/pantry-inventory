@@ -1,18 +1,13 @@
 package com.example.pantryinventory;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 import android.util.Log;
 
@@ -24,11 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.xml.transform.Result;
-
-public class DatabaseCheckJobService extends JobService {
+public class NotifyUser extends JobService {
     private static final String CHANNEL_ID = "DatabaseCheckChannel";
-    private static final String TAG = "DatabaseCheckJobService";
+    private static final String TAG = "NotifyUser";
 
     @Override
     public boolean onStartJob(JobParameters params) {
