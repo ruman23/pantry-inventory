@@ -2,6 +2,9 @@
 An app to help keep track of food before it expires!
 
 Written for Android using Android Studio and Firebase.
+•	Milestone 4
+	⁃	UI Updated and bugfixes. Notifications still experiencing emulator error.
+ 
 •	Milestone 3
 	⁃	New features include adding notifications for when a food is set to expire a week out and the exact day the food is set to expire.
 
