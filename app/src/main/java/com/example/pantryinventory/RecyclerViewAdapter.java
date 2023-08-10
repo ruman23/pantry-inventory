@@ -1,5 +1,6 @@
 package com.example.pantryinventory;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.squareup.picasso.Picasso;
@@ -38,14 +43,58 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Picasso.get().load(itemData.getImageUrl()).into(holder.imageView);
         holder.title.setText(itemData.getFoodName());
 
-        if (isNotification) {
-            // Set a custom string for the subtitle if it's a notification
-            holder.subtitle.setText("Will expire on "+ itemData.getExpDate());
-        } else {
-            // Set the original value from the ItemData object for the subtitle
-            holder.subtitle.setText(itemData.getExpDate());
+        // Parse the date from the subtitle text
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            Date subtitleDate = sdf.parse(itemData.getExpDate());
+
+            // Get the current date without time
+            Calendar currentCal = Calendar.getInstance();
+            currentCal.set(Calendar.HOUR_OF_DAY, 0);
+            currentCal.set(Calendar.MINUTE, 0);
+            currentCal.set(Calendar.SECOND, 0);
+            currentCal.set(Calendar.MILLISECOND, 0);
+
+            // Get the previous day's date
+            Calendar previousDayCal = (Calendar) currentCal.clone();
+            previousDayCal.add(Calendar.DAY_OF_YEAR, -1);
+
+            // Get the date for 7 days from now
+            Calendar sevenDaysLaterCal = (Calendar) currentCal.clone();
+            sevenDaysLaterCal.add(Calendar.DAY_OF_YEAR, 7);
+
+            if (subtitleDate != null) {
+                if (isNotification) {
+                    if (!subtitleDate.after(currentCal.getTime()) && !subtitleDate.before(previousDayCal.getTime())) {
+                        holder.subtitle.setText("Expired on " + itemData.getExpDate());
+                    } else {
+                        holder.subtitle.setText("Will expire on " + itemData.getExpDate());
+                    }
+                } else {
+                    // Set the original value from the ItemData object for the subtitle
+                    holder.subtitle.setText(itemData.getExpDate());
+                }
+
+                if (!subtitleDate.after(currentCal.getTime()) && !subtitleDate.before(previousDayCal.getTime())) {
+                    // The date is either today or the previous day
+                    holder.itemView.setBackgroundColor(Color.parseColor("#ff4d4d"));
+                } else if (subtitleDate.before(sevenDaysLaterCal.getTime())) {
+                    // The date is within the next 7 days
+                    holder.itemView.setBackgroundColor(Color.parseColor("#FFFF7F"));
+                } else {
+                    // All other cases
+                    holder.itemView.setBackgroundColor(Color.parseColor("#80ff80"));
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Optionally, you can set a default background color here if the date parsing fails
+            holder.itemView.setBackgroundColor(Color.GRAY);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -86,6 +135,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemListener {
         void onItemClick(int position);
+
         void onDeleteClick(int position);
     }
 }
