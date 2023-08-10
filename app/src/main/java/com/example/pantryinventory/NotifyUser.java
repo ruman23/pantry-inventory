@@ -52,13 +52,16 @@ public class NotifyUser extends JobService {
             }
 
             @Override
-            public void DataIsInserted() { }
+            public void DataIsInserted() {
+            }
 
             @Override
-            public void DataIsUpdated() { }
+            public void DataIsUpdated() {
+            }
 
             @Override
-            public void DataIsDeleted() { }
+            public void DataIsDeleted() {
+            }
         });
     }
 
@@ -99,28 +102,39 @@ public class NotifyUser extends JobService {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Log.d(TAG, "Create notification manager");
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(hashStringToInt(item.getFoodName()), builder.build());
+
+        // Before Notification
+//        int notificationId = hashStringToInt(item.getFoodName());
+        int notificationId = hashStringToInt("Notification");
+        Log.d(TAG, "Notification ID: " + notificationId);
+        Log.d(TAG, "Notification Content: " + item.toString());
+
+        try {
+            notificationManager.notify(notificationId, builder.build());
+            // After Notification
+            Log.d(TAG, "Notification has been sent successfully.");
+        } catch (Exception e) {
+            // Catching potential exceptions and logging them
+            Log.e(TAG, "Failed to send notification.", e);
+        }
     }
 
     public static int hashStringToInt(String s) {
         int hash = 7;
         for (int i = 0; i < s.length(); i++) {
-            hash = hash*31 + s.charAt(i);
+            hash = hash * 31 + s.charAt(i);
         }
         return hash;
     }
 
     private void createNotificationChannel() {
-        Log.d(TAG, "Creating notification channel");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "DatabaseCheckChannel";
-            String description = "Channel for Database Check";
+            CharSequence name = "Channel Name V2";
+            String description = "Channel Description";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

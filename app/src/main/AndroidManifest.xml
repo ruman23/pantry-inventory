@@ -57,9 +57,8 @@
 
         <service
             android:name=".NotifyUser"
-            android:exported="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
-
     </application>
 </manifest>
