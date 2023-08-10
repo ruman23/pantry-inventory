@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.squareup.picasso.Picasso;
 
@@ -56,36 +57,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             currentCal.set(Calendar.SECOND, 0);
             currentCal.set(Calendar.MILLISECOND, 0);
 
-            // Get the previous day's date
-            Calendar previousDayCal = (Calendar) currentCal.clone();
-            previousDayCal.add(Calendar.DAY_OF_YEAR, -1);
+            long diff = subtitleDate.getTime() - currentCal.getTimeInMillis();
+            long diffDays = TimeUnit.MILLISECONDS.toDays(diff);
 
-            // Get the date for 7 days from now
-            Calendar sevenDaysLaterCal = (Calendar) currentCal.clone();
-            sevenDaysLaterCal.add(Calendar.DAY_OF_YEAR, 7);
-
-            if (subtitleDate != null) {
-                if (isNotification) {
-                    if (!subtitleDate.after(currentCal.getTime()) && !subtitleDate.before(previousDayCal.getTime())) {
-                        holder.subtitle.setText("Expired on " + itemData.getExpDate());
-                    } else {
-                        holder.subtitle.setText("Will expire on " + itemData.getExpDate());
-                    }
+            if (isNotification) {
+                if (diffDays < 0) {
+                    holder.subtitle.setText("Expired " + Math.abs(diffDays) + " days ago");
+                } else if (diffDays == 0) {
+                    holder.subtitle.setText("Expires today");
                 } else {
-                    // Set the original value from the ItemData object for the subtitle
-                    holder.subtitle.setText(itemData.getExpDate());
+                    holder.subtitle.setText("Will expire in " + diffDays + " days");
                 }
-
-                if (!subtitleDate.after(currentCal.getTime()) && !subtitleDate.before(previousDayCal.getTime())) {
-                    // The date is either today or the previous day
-                    holder.itemView.setBackgroundColor(Color.parseColor("#ff4d4d"));
-                } else if (subtitleDate.before(sevenDaysLaterCal.getTime())) {
-                    // The date is within the next 7 days
-                    holder.itemView.setBackgroundColor(Color.parseColor("#FFFF7F"));
+            } else {
+                // Set the original value as a day count from the current date
+                if (diffDays < 0) {
+                    holder.subtitle.setText(Math.abs(diffDays) + " days ago");
+                } else if (diffDays == 0) {
+                    holder.subtitle.setText("Today");
                 } else {
-                    // All other cases
-                    holder.itemView.setBackgroundColor(Color.parseColor("#80ff80"));
+                    holder.subtitle.setText("In " + diffDays + " days");
                 }
+            }
+
+            // Background color logic
+            if (diffDays <= 0) {
+                // The date is either today or the previous day
+                holder.itemView.setBackgroundColor(Color.parseColor("#ff4d4d"));
+            } else if (diffDays <= 7) {
+                // The date is within the next 7 days
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFF7F"));
+            } else {
+                // All other cases
+                holder.itemView.setBackgroundColor(Color.parseColor("#80ff80"));
             }
 
         } catch (ParseException e) {

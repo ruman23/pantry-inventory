@@ -8,46 +8,44 @@
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:backgroundTint="@color/red" />
-
+        android:backgroundTint="@color/red"
+        android:text="Delete" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="70dp"
         android:orientation="horizontal"
         android:padding="8dp"
         android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/content_description"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/content_description" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="16dp">
+            android:textColor="#000"
+            android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textColor="#000"/>
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:textColor="#000"/>
-
-        </LinearLayout>
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout></RelativeLayout>
