@@ -1,0 +1,7 @@
+<map id="com.example.pantryinventory.RecyclerViewAdapter.OnItemListener" name="com.example.pantryinventory.RecyclerViewAdapter.OnItemListener">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,39,243,81"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1example_1_1pantryinventory_1_1_main_activity.html" title=" " alt="" coords="291,5,485,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="257,40,290,36,291,42,258,46"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1example_1_1pantryinventory_1_1_notification_list.html" title=" " alt="" coords="291,72,485,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,74,291,78,290,84,257,80"/>
+</map>

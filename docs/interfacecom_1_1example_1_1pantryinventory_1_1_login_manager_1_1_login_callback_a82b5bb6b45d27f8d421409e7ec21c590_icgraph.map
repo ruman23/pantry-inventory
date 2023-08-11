@@ -1,0 +1,9 @@
+<map id="com.example.pantryinventory.LoginManager.LoginCallback.onFailure" name="com.example.pantryinventory.LoginManager.LoginCallback.onFailure">
+<area shape="rect" id="Node000001" title=" " alt="" coords="541,55,785,97"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1example_1_1pantryinventory_1_1_login_manager.html#a5e1c73c255d64b30f4c339e391172292" title=" " alt="" coords="299,55,493,97"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="526,79,493,79,493,73,526,73"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1example_1_1pantryinventory_1_1_login_test.html#acbaf9ab597dd6871cbf77cb1f9cc1582" title=" " alt="" coords="5,5,251,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="283,61,251,56,251,51,284,56"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1example_1_1pantryinventory_1_1_login_test.html#a8ed73ac6cf36dbf7b3805c5770880580" title=" " alt="" coords="8,88,248,147"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="284,96,248,101,247,96,283,91"/>
+</map>

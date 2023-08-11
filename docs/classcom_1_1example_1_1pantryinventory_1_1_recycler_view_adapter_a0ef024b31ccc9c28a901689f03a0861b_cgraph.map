@@ -1,0 +1,9 @@
+<map id="com.example.pantryinventory.RecyclerViewAdapter.onBindViewHolder" name="com.example.pantryinventory.RecyclerViewAdapter.onBindViewHolder">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,260,115"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1example_1_1pantryinventory_1_1_item_data.html#ab035325bec7025cf0abd39c3ff11aa3a" title=" " alt="" coords="308,5,502,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,69,300,50,301,55,223,74"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1example_1_1pantryinventory_1_1_item_data.html#ab3e10ddb07bc83c7084ebfac4f83e0f0" title=" " alt="" coords="308,72,502,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="260,91,293,91,293,96,260,96"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1example_1_1pantryinventory_1_1_item_data.html#aaa8a09502c3e07e61f337f36e542e56a" title=" " alt="" coords="308,139,502,181"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="223,113,301,132,300,137,222,118"/>
+</map>

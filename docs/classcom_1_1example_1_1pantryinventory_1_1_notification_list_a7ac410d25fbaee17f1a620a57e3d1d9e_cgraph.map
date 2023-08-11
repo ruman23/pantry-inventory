@@ -1,0 +1,7 @@
+<map id="com.example.pantryinventory.NotificationList.onDeleteClick" name="com.example.pantryinventory.NotificationList.onDeleteClick">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,200,56"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1example_1_1pantryinventory_1_1_firebase_d_b_helper.html#ac6dbfe7424e270a470c149e926ca6f82" title=" " alt="" coords="248,13,442,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,32,233,32,233,37,200,37"/>
+<area shape="rect" id="Node000003" href="$interfacecom_1_1example_1_1pantryinventory_1_1_firebase_d_b_helper_1_1_data_status.html#a6a22d862be7733896943e1269d6db752" title=" " alt="" coords="490,5,716,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="442,32,475,32,475,37,442,37"/>
+</map>

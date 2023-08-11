@@ -1,0 +1,7 @@
+<map id="com.example.pantryinventory.ItemData.getFoodName" name="com.example.pantryinventory.ItemData.getFoodName">
+<area shape="rect" id="Node000001" title=" " alt="" coords="308,39,502,81"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1example_1_1pantryinventory_1_1_recycler_view_adapter.html#a0ef024b31ccc9c28a901689f03a0861b" title=" " alt="" coords="5,5,260,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="292,49,260,45,260,40,293,44"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1example_1_1pantryinventory_1_1_add_foods.html#a623cbd1b7384f7a970016088cca253e5" title=" " alt="" coords="35,72,230,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="293,76,230,84,230,79,293,71"/>
+</map>

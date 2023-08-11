@@ -1,0 +1,7 @@
+<map id="com.example.pantryinventory.Registration" name="com.example.pantryinventory.Registration">
+<area shape="rect" id="Node000001" title=" " alt="" coords="43,96,238,139"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,137,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,42,128,94,123,97,86,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="161,5,259,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="194,46,157,97,153,94,190,42"/>
+</map>

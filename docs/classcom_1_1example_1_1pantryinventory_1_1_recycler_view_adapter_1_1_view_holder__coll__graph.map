@@ -1,0 +1,15 @@
+<map id="com.example.pantryinventory.RecyclerViewAdapter.ViewHolder" name="com.example.pantryinventory.RecyclerViewAdapter.ViewHolder">
+<area shape="rect" id="Node000001" title=" " alt="" coords="380,125,594,168"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="37,5,211,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,33,243,41,301,59,357,82,444,122,442,127,355,86,299,64,242,47,210,38"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="49,56,199,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,80,356,108,412,122,410,127,355,113,213,86"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="82,107,166,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="181,121,379,136,379,141,181,127"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="87,163,161,189"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="176,176,260,177,355,172,395,166,395,171,356,177,260,183,176,181"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="94,213,154,240"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="168,223,255,216,355,199,400,184,441,166,443,171,402,189,356,204,256,222,168,228"/>
+<area shape="rect" id="Node000007" href="$interfacecom_1_1example_1_1pantryinventory_1_1_recycler_view_adapter_1_1_on_item_listener.html" title=" " alt="" coords="5,264,243,307"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="256,267,306,255,355,238,414,203,460,166,464,170,417,208,357,242,308,260,258,272"/>
+</map>

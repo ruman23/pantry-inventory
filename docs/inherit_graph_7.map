@@ -1,0 +1,16 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$interfacecom_1_1example_1_1pantryinventory_1_1_recycler_view_adapter_1_1_on_item_listener.html" title=" " alt="" coords="5,39,243,81"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1example_1_1pantryinventory_1_1_main_activity.html" title=" " alt="" coords="291,72,485,115"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="258,74,291,78,290,84,257,80"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1example_1_1pantryinventory_1_1_notification_list.html" title=" " alt="" coords="291,5,485,48"/>
+<area shape="poly" id="edge2_Node000000_Node000005" title=" " alt="" coords="257,40,290,36,291,42,258,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="58,147,190,173"/>
+<area shape="poly" id="edge5_Node000002_Node000001" title=" " alt="" coords="193,140,300,113,301,118,195,145"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="163,137,241,91,265,74,289,58,315,46,318,51,292,62,268,78,244,96,165,141"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1example_1_1pantryinventory_1_1_add_foods.html" title=" " alt="" coords="291,139,485,181"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="205,157,290,157,290,163,205,163"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1example_1_1pantryinventory_1_1_login.html" title=" " alt="" coords="291,205,485,248"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="195,175,301,202,300,207,193,180"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1example_1_1pantryinventory_1_1_registration.html" title=" " alt="" coords="291,272,485,315"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="158,179,219,218,292,258,319,269,317,274,290,262,216,223,155,184"/>
+</map>
